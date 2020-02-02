@@ -8,6 +8,12 @@ public:
     int source;
     int destination;
     int weight;
+    Node_Edge(int s,int d,int w)
+    {
+        source = s;
+        destination = d;
+        weight = w;
+    }
 };
 
 Node n[size];
@@ -22,7 +28,7 @@ int Set(int parent)
     return (p[parent]==parent) ? parent : Set(p[parent]);
 }
 
-void KruskalAlgo(int v, int e)
+void KruskalAlgo(int e, int v)
 {
     int c = 0, c1 = 0, total_weight = 0;
     for(int i = 1; i <= v; i++)
@@ -30,7 +36,7 @@ void KruskalAlgo(int v, int e)
         p[i] = i;
     }
 
-    for(int i = 1; i <= e; i++)
+    for(int i = 0; i < e; i++)
     {
         int s,d,set_u,set_v;
         s = n[i].source;
@@ -43,11 +49,11 @@ void KruskalAlgo(int v, int e)
             mst[c1] = n[i];
             c++;
             c1++;
-            p[s] = v;
+            p[s] = d;
         }
     }
 
-    for(int i=1 ; i <= c1; i++)
+    for(int i=0 ; i < c1; i++)
     {
         cout<<mst[i].source<<" ";
         cout<<mst[i].destination<<" ";
@@ -68,15 +74,16 @@ int main()
     int u,v,w;
     cin>>vertex>>edge;
 
-    for(int i = 1; i <= edge; i++)
+    for(int i = 0; i < edge; i++)
     {
         cin>>u>>v>>w;
         n[i].source = u;
         n[i].destination = v;
         n[i].weight = w;
+        n[i].Node_Edge(u,v,w);
     }
 
-    for(int i = 1; i <= edge; i++)
+    for(int i = 0; i < edge; i++)
     {
         cout<<n[i].source<<" ";
         cout<<n[i].destination<<" ";
@@ -86,9 +93,9 @@ int main()
 
     cout<<endl<<"After Sorting :"<<endl;
 
-    sort(n,n+edge+1,compare);
+    sort(n,n+edge,compare);
 
-    for(int i = 1; i <= edge; i++)
+    for(int i = 0; i < edge; i++)
     {
         cout<<n[i].source<<" ";
         cout<<n[i].destination<<" ";
@@ -98,7 +105,7 @@ int main()
 
     cout<<endl<<"Minimum Spanning Tree : "<<endl;
 
-    KruskalAlgo(vertex,edge);
+    KruskalAlgo(edge,vertex);
 
     return 0;
 }
